@@ -18,7 +18,7 @@ function onKey(event) {
     else if (keycode==227 || keycode==40)
         car.position.z+=5;
        // acceleration-=2;
-     if (keycode==177||keycode==37)
+    else if (keycode==177||keycode==37)
         car.position.x-=5;
     else if (keycode==176|| keycode==39)
         car.position.x+=5;
