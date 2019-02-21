@@ -22,7 +22,7 @@ function onKey(event) {
         car.position.x-=5;
     else if (keycode==176|| keycode==39)
         car.position.x+=5;
-    
+    document.a
 }
 
 function init() {
@@ -62,7 +62,7 @@ function init() {
     var skyGeometry = new THREE.CubeGeometry(1000, 1000, 1000);
     var skyMaterial = new THREE.MeshFaceMaterial(material_array);
     var skyBox = new THREE.Mesh(skyGeometry, skyMaterial);
-    // skyBox.rotation.y += Math.PI / 2;
+    skyBox.rotation.y += Math.PI / 2;
     scene.add(skyBox);
     // skyBox.frustumCulled=false;
 
@@ -79,14 +79,14 @@ function init() {
 
     // car.
     var carGeometry=new THREE.BoxGeometry(5,5,5);
-    var carMaterial=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:true,opacity:0.5,transparent:true});
+    var carMaterial=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:false,opacity:0.9,transparent:true});
     car=new THREE.Mesh(carGeometry,carMaterial);
     // car.position.set(0, 1,200); //15
     car.position.set(0, 1,15); //15
     //Camera
     scene.add(car);
     car.add(camera)
-    document.addEventListener("keyup", onKey,false);
+    document.addEventListener("keydown", onKey,false);
 
     //stone
     // var stoneTexture=new THREE.TextureLoader().load('stone.jpg');
