@@ -35,7 +35,7 @@ function init() {
     scene = new THREE.Scene();
 
     scene.background = new THREE.Color(0x93beff);
-    camera = new THREE.PerspectiveCamera(30000, screenWidth / screenHeight, 0.5, 10000);
+    camera = new THREE.PerspectiveCamera(30000, screenWidth / screenHeight, 1, 10000);
     // camera.position.set(0, 0, 0);
     scene.add(camera);
     var light = new THREE.DirectionalLight(0xfff0f0, 0.8);
@@ -64,6 +64,12 @@ function init() {
     scene.add(skyBox);
     // skyBox.frustumCulled=false;
 
+    var stoneGeometry=new THREE.SphereGeometry(3,8,8);
+    var stoneMaterial=new THREE.MeshBasicMaterial({color:0x00ff00});
+    stone=new THREE.Mesh(stoneGeometry,stoneMaterial);
+    stone.position.set(-30,25,0);
+    scene.add(stone);
+
     // car.
     var carGeometry=new THREE.BoxGeometry(5,5,5);
     var carMaterial=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:true});
@@ -76,15 +82,13 @@ function init() {
     document.addEventListener("keydown", onKey,false);
 
     //stone
-    var stoneTexture=new THREE.TextureLoader().load('stone.jpg');
-    var stoneNormalMap=new THREE.TextureLoader().load('NormalMap.png');
-    var stoneDisplacementMap=new THREE.TextureLoader().load('DisplacementMap.png');
-    var stoneGeometry=new THREE.SphereGeometry(3,8,8);
+    // var stoneTexture=new THREE.TextureLoader().load('stone.jpg');
+    // var stoneNormalMap=new THREE.TextureLoader().load('NormalMap.png');
+    // var stoneDisplacementMap=new THREE.TextureLoader().load('DisplacementMap.png');
+
     // var stoneMaterial=new THREE.MeshStandardMaterial({map:stoneTexture,normalMap:stoneNormalMap,displacementMap:stoneDisplacementMap});
-    var stoneMaterial=new THREE.MeshBasicMaterial({color:0x00ff00});
-    stone=new THREE.Mesh(stoneGeometry,stoneMaterial);
-    stone.position.set(-30,25,0);
-    scene.add(stone);
+
+
 
     function render() {
         // car.position.z-=acceleration;
