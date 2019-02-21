@@ -89,7 +89,7 @@ function init() {
     var stoneDisplacementMap=new THREE.TextureLoader().load('DisplacementMap.png');
     var stoneMaterial=new THREE.MeshStandardMaterial({map:stoneTexture,normalMap:stoneNormalMap,displacementMap:stoneDisplacementMap,metalness:0});
     stone=new THREE.Mesh(stoneGeometry,stoneMaterial);
-    stone.position.set(60,0,190);
+    stone.position.set(100,0,380);
 
     var stoneLight=new THREE.SpotLight(0xf0e4f9,300,15,deg2rad(10),1,1);
     stoneLight.position.set(4,12,-4);
@@ -101,7 +101,7 @@ function init() {
     var carMaterial=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:false,opacity:0.9,transparent:true});
     car=new THREE.Mesh(carGeometry,carMaterial);
     // car.position.set(0, 1,200); //15
-    car.position.set(0, 1,600); //15
+    car.position.set(0, 0,400); //15
     //Camera
     scene.add(car);
     car.add(camera)
@@ -117,7 +117,7 @@ function init() {
 
 
     function render() {
-        stone.position.x-=0.1; //TODO: Animacja kulki
+        // stone.position.x-=0.1; //TODO: Animacja kulki
         // stone.rotate(2);
         // car.position.z-=1;
         // skyBox.position.z-=0.2;
