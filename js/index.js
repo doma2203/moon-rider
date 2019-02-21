@@ -62,7 +62,7 @@ function init() {
     var skyBox = new THREE.Mesh(skyGeometry, skyMaterial);
     // skyBox.rotation.y += Math.PI / 2;
     scene.add(skyBox);
-    skyBox.frustumCulled=false;
+    // skyBox.frustumCulled=false;
 
     // car.
     var carGeometry=new THREE.BoxGeometry(5,5,5);
