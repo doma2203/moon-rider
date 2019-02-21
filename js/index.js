@@ -1,5 +1,6 @@
 var container, scene, camera, renderer, controls;
-var car;
+var car,stone;
+var acceleration=1;
 
 init();
 
@@ -7,10 +8,24 @@ function deg2rad(deg) {
     return deg / 180 * Math.PI;
 }
 
+
+
+function onKey(event) {
+    var keycode=event.which;
+    // if (keycode == 228 || keycode==38)
+        // acceleration+=2;
+    // else if (keycode==227 || keycode==40)
+       // acceleration-=2;
+     if (keycode==177||keycode==37)
+        car.position.x-=3;
+    else if (keycode==176|| keycode==39)
+        car.position.x+=3;
+    
+}
+
 function init() {
     var screenWidth = window.innerWidth;
     var screenHeight = window.innerHeight;
-
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(screenWidth, screenHeight);
@@ -18,13 +33,9 @@ function init() {
     document.body.appendChild(renderer.domElement);
     document.body.appendChild(WEBVR.createButton(renderer));
     scene = new THREE.Scene();
-    //            }
-
-    // if (keyboard.pressed("left") || keyboard.pressed("A")) {
-    //     if (movingCube.position.x > -270)
 
     scene.background = new THREE.Color(0x93beff);
-    camera = new THREE.PerspectiveCamera(70, screenWidth / screenHeight, 10, 1000);
+    camera = new THREE.PerspectiveCamera(30000, screenWidth / screenHeight, 0.5, 10000);
     // camera.position.set(0, 0, 0);
     scene.add(camera);
     var light = new THREE.DirectionalLight(0xfff0f0, 0.8);
@@ -43,39 +54,40 @@ function init() {
     for (var i = 0; i < 6; i++)
         material_array.push(new THREE.MeshBasicMaterial({
             map: TextureLoader.load(skybox_dest + skybox_dirs[i] + skybox_suffix),
-            side: THREE.BackSide
+            side: THREE.BackSide,
+
         }));
-    var skyGeometry = new THREE.CubeGeometry(1000, 1000, 1000);
+    var skyGeometry = new THREE.CubeGeometry(1500, 1500, 1500);
     var skyMaterial = new THREE.MeshFaceMaterial(material_array);
     var skyBox = new THREE.Mesh(skyGeometry, skyMaterial);
-    skyBox.rotation.y += Math.PI / 2;
+    // skyBox.rotation.y += Math.PI / 2;
     scene.add(skyBox);
-
-
-    //Car
-    // car=THREE.Object3D();
-    // var geometry = new THREE.PlaneGeometry( 30, 30, 70, 70);
-    // geometry.rotateZ(deg2rad(50));
-    // var material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
-    // var plane = new THREE.Mesh( geometry, material);
-    // scene.add( plane );
+    skyBox.frustumCulled=false;
 
     // car.
-    // var carGeometry=new THREE.CubeGeometry(50,50,50,10,10,10);
-    // var carMaterial=new THREE.MeshLambertMaterial({color:0xff0000});
-    // car=new THREE.Mesh(carGeometry,carMaterial);
-    // car.position.set(0, 0, 200);
+    var carGeometry=new THREE.BoxGeometry(5,5,5);
+    var carMaterial=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:true});
+    car=new THREE.Mesh(carGeometry,carMaterial);
+    // car.position.set(0, 1,200); //15
+    car.position.set(0, 1,15); //15
     //Camera
-    // scene.add(car);
+    scene.add(car);
+    car.add(camera)
+    document.addEventListener("keydown", onKey,false);
 
 
-    // camera.lookAt(new THREE.vector(0,-2,10);
-    //car.add(camera);
-    //camera.lookAt(car);
+    //stone
+    var stoneTexture=new THREE.TextureLoader().load('../stone.jpg');
+    var stoneNormalMap=new THREE.TextureLoader().load('../NormalMap.png');
+    var stoneDisplacementMap=new THREE.TextureLoader().load('../DisplacementMap.png');
+    var stoneGeometry=new THREE.SphereGeometry(3,20,20);
+    var stoneMaterial=new THREE.MeshStandardMaterial({map:stoneTexture,normalMap:stoneNormalMap,displacementMap:stoneDisplacementMap});
+    stone=new THREE.Mesh(stoneGeometry,stoneMaterial);
+    stone.position.set(0,1,17);
 
     function render() {
-
-        // camera.lookAt(car.position);
+        // car.position.z-=acceleration;
+        // skyBox.position.z-=0.2;
         renderer.render(scene, camera);
     }
 
