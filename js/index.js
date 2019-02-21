@@ -67,12 +67,12 @@ function init() {
     var stoneGeometry=new THREE.SphereGeometry(3,8,8);
     var stoneMaterial=new THREE.MeshBasicMaterial({color:0x00ff00});
     stone=new THREE.Mesh(stoneGeometry,stoneMaterial);
-    stone.position.set(-30,25,0);
+    stone.position.set(0,1,16);
     scene.add(stone);
 
     // car.
     var carGeometry=new THREE.BoxGeometry(5,5,5);
-    var carMaterial=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:true});
+    var carMaterial=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:true,opacity:0.5});
     car=new THREE.Mesh(carGeometry,carMaterial);
     // car.position.set(0, 1,200); //15
     car.position.set(0, 1,15); //15
