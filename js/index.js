@@ -86,7 +86,7 @@ function init() {
     //Camera
     scene.add(car);
     car.add(camera)
-    document.addEventListener("keydown", onKey,false);
+    document.addEventListener("keyup", onKey,false);
 
     //stone
     // var stoneTexture=new THREE.TextureLoader().load('stone.jpg');
@@ -98,7 +98,7 @@ function init() {
 
 
     function render() {
-        car.position.z-=1;
+        // car.position.z-=1;
         // skyBox.position.z-=0.2;
         renderer.render(scene, camera);
     }
