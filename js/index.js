@@ -12,14 +12,16 @@ function deg2rad(deg) {
 
 function onKey(event) {
     var keycode=event.which;
-    // if (keycode == 228 || keycode==38)
+    if (keycode == 228 || keycode==38)
+        car.position.z-=5;
         // acceleration+=2;
-    // else if (keycode==227 || keycode==40)
+    else if (keycode==227 || keycode==40)
+        car.position.z+=5;
        // acceleration-=2;
      if (keycode==177||keycode==37)
-        car.position.x-=3;
+        car.position.x-=5;
     else if (keycode==176|| keycode==39)
-        car.position.x+=3;
+        car.position.x+=5;
     
 }
 
@@ -96,7 +98,7 @@ function init() {
 
 
     function render() {
-        // car.position.z-=acceleration;
+        car.position.z-=1;
         // skyBox.position.z-=0.2;
         renderer.render(scene, camera);
     }
