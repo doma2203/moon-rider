@@ -57,7 +57,7 @@ function init() {
             side: THREE.BackSide,
 
         }));
-    var skyGeometry = new THREE.CubeGeometry(1200, 1200, 1200);
+    var skyGeometry = new THREE.CubeGeometry(1000, 1000, 1000);
     var skyMaterial = new THREE.MeshFaceMaterial(material_array);
     var skyBox = new THREE.Mesh(skyGeometry, skyMaterial);
     // skyBox.rotation.y += Math.PI / 2;
@@ -84,6 +84,7 @@ function init() {
     var stoneMaterial=new THREE.MeshBasicMaterial({color:0x00ff00});
     stone=new THREE.Mesh(stoneGeometry,stoneMaterial);
     stone.position.set(-30,25,0);
+    scene.add(stone);
 
     function render() {
         // car.position.z-=acceleration;
