@@ -75,15 +75,15 @@ function init() {
     car.add(camera)
     document.addEventListener("keydown", onKey,false);
 
-
     //stone
-    var stoneTexture=new THREE.TextureLoader().load('../stone.jpg');
-    var stoneNormalMap=new THREE.TextureLoader().load('../NormalMap.png');
-    var stoneDisplacementMap=new THREE.TextureLoader().load('../DisplacementMap.png');
+    var stoneTexture=new THREE.TextureLoader().load('stone.jpg');
+    var stoneNormalMap=new THREE.TextureLoader().load('NormalMap.png');
+    var stoneDisplacementMap=new THREE.TextureLoader().load('DisplacementMap.png');
     var stoneGeometry=new THREE.SphereGeometry(3,20,20);
-    var stoneMaterial=new THREE.MeshStandardMaterial({map:stoneTexture,normalMap:stoneNormalMap,displacementMap:stoneDisplacementMap});
+    // var stoneMaterial=new THREE.MeshStandardMaterial({map:stoneTexture,normalMap:stoneNormalMap,displacementMap:stoneDisplacementMap});
+    var stoneMaterial=new THREE.MeshBasicMaterial({color:0x00ff00});
     stone=new THREE.Mesh(stoneGeometry,stoneMaterial);
-    stone.position.set(0,1,17);
+    stone.position.set(0,1,13);
 
     function render() {
         // car.position.z-=acceleration;
