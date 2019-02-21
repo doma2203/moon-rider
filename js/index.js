@@ -64,10 +64,10 @@ function init() {
     scene.add(skyBox);
     // skyBox.frustumCulled=false;
 
-    var stoneGeometry=new THREE.SphereGeometry(3,8,8);
+    var stoneGeometry=new THREE.SphereGeometry(5,8,8);
     var stoneMaterial=new THREE.MeshBasicMaterial({color:0x00ff00});
     stone=new THREE.Mesh(stoneGeometry,stoneMaterial);
-    stone.position.set(0,1,16);
+    stone.position.set(0,1,13);
     scene.add(stone);
 
     // car.
