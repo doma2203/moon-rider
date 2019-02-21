@@ -57,7 +57,7 @@ function init() {
             side: THREE.BackSide,
 
         }));
-    var skyGeometry = new THREE.CubeGeometry(1500, 1500, 1500);
+    var skyGeometry = new THREE.CubeGeometry(1200, 1200, 1200);
     var skyMaterial = new THREE.MeshFaceMaterial(material_array);
     var skyBox = new THREE.Mesh(skyGeometry, skyMaterial);
     // skyBox.rotation.y += Math.PI / 2;
@@ -79,11 +79,11 @@ function init() {
     var stoneTexture=new THREE.TextureLoader().load('stone.jpg');
     var stoneNormalMap=new THREE.TextureLoader().load('NormalMap.png');
     var stoneDisplacementMap=new THREE.TextureLoader().load('DisplacementMap.png');
-    var stoneGeometry=new THREE.SphereGeometry(3,20,20);
+    var stoneGeometry=new THREE.SphereGeometry(3,8,8);
     // var stoneMaterial=new THREE.MeshStandardMaterial({map:stoneTexture,normalMap:stoneNormalMap,displacementMap:stoneDisplacementMap});
     var stoneMaterial=new THREE.MeshBasicMaterial({color:0x00ff00});
     stone=new THREE.Mesh(stoneGeometry,stoneMaterial);
-    stone.position.set(0,1,13);
+    stone.position.set(-30,25,0);
 
     function render() {
         // car.position.z-=acceleration;
