@@ -72,7 +72,7 @@ function init() {
 
     // car.
     var carGeometry=new THREE.BoxGeometry(5,5,5);
-    var carMaterial=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:true,opacity:0.5});
+    var carMaterial=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:true,opacity:0.5,transparent:true});
     car=new THREE.Mesh(carGeometry,carMaterial);
     // car.position.set(0, 1,200); //15
     car.position.set(0, 1,15); //15
