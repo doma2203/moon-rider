@@ -66,6 +66,11 @@ function init() {
 
     var stoneGeometry=new THREE.SphereGeometry(5,8,8);
     var stoneMaterial=new THREE.MeshBasicMaterial({color:0x00ff00});
+    var stoneTexture=new THREE.TextureLoader().load('stone.jpg');
+    var stoneNormalMap=new THREE.TextureLoader().load('NormalMap.png');
+    var stoneDisplacementMap=new THREE.TextureLoader().load('DisplacementMap.png');
+
+    var stoneMaterial=new THREE.MeshStandardMaterial({map:stoneTexture,normalMap:stoneNormalMap,displacementMap:stoneDisplacementMap});
     stone=new THREE.Mesh(stoneGeometry,stoneMaterial);
     stone.position.set(0,1,10);
     scene.add(stone);
