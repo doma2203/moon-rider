@@ -18,8 +18,9 @@ canvas {
 }
 
 .score-container #score {
-    color: white;
-    font-size: 8vh;
-    font-family: 'Exo', sans-serif;
+    color: #262038;
+    font-size: 3vh;
+    /*font-family: 'Exo', sans-serif;*/
+    font-family: 'Press Start 2P', regular;
     font-weight: 700;
 }

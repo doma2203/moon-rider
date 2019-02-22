@@ -1,7 +1,16 @@
 var container, scene, camera, renderer, controls;
-var car,stone;
-var stoneList=[];
-var acceleration=1;
+var car, stone;
+var stoneList = [];
+var stoneTexture = new THREE.TextureLoader().load('stone.jpg');
+var stoneMaterial = new THREE.MeshBasicMaterial({color: 0x00ff00});
+var stoneNormalMap = new THREE.TextureLoader().load('NormalMap.png');
+var stoneDisplacementMap = new THREE.TextureLoader().load('DisplacementMap.png');
+var score = 0;
+var scoreText = document.getElementById('score');
+var crash = 0;
+var crashId = "";
+var lastCrashId = "";
+
 
 init();
 
@@ -9,33 +18,68 @@ function deg2rad(deg) {
     return deg / 180 * Math.PI;
 }
 
-function getRandomArbitrary(min, max){
-    return Math.random() * (max - min) + min;
+function rotateStone(initPosX) {
+    var angle = 8;
+    var mult = initPosX / -100;
+    stone.position.x += (mult * 0.1);
+    stone.rotateOnAxis(new THREE.Vector3(1, 0, 0), mult * deg2rad(angle))
+
 }
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+
+function count_score() {
+    if (crash) {
+        car.material.transparent = false;
+        car.material.opacity = 0.2;
+    //     if (crashId == lastCrashId) {
+    //         score -= 100;
+    //         lastCrashId = crashId;
+    //     }
+    // }else {
+    //         car.material.transparent=True;
+    //         car.material.opacity=0.5;
+    //     }
+    }
+    score += 0.1;
+    scoreText.innerText = "Score: " + Math.floor(score);
 }
 
-function make_random_stones(material)
-{
-    var a=1*50;
-    var b=getRandomInt()
+
+function create_random_stones(material) {
+    var stoneGeometry = new THREE.SphereGeometry(1, 18, 18);
+
+    var stoneMaterial = new THREE.MeshStandardMaterial({
+        map: stoneTexture,
+        normalMap: stoneNormalMap,
+        displacementMap: stoneDisplacementMap,
+        metalness: 0
+    });
+    stone = new THREE.Mesh(stoneGeometry, stoneMaterial);
+    stone.position.set(-100, 0, 380);
+
+    // var stoneLight=new THREE.SpotLight(0xf0e4f9,300,15,deg2rad(10),1,1);
+    // stoneLight.position.set(4,12,-4);
+    // var stoneLightHelper=new THREE.SpotLightHelper(stoneLight);
+    // stone.add(stoneLight);
+    scene.add(stone);
+
+    // var a=1*50;
+    // var b=getRandomInt()
 }
 
 
 function onKey(event) {
-    var keycode=event.which;
-    if (keycode == 228 || keycode==38)
-        car.position.z-=5;
-        // acceleration+=2;
-    else if (keycode==227 || keycode==40)
-        car.position.z+=5;
-       // acceleration-=2;
-    else if (keycode==177||keycode==37)
-        car.position.x-=5;
-    else if (keycode==176|| keycode==39)
-        car.position.x+=5;
+    var keycode = event.which;
+    if (keycode == 228 || keycode == 38)
+        car.position.z -= 5;
+    // acceleration+=2;
+    else if (keycode == 227 || keycode == 40)
+        car.position.z += 5;
+    // acceleration-=2;
+    else if (keycode == 177 || keycode == 37)
+        car.position.x -= 5;
+    else if (keycode == 176 || keycode == 39)
+        car.position.x += 5;
     document.a
 }
 
@@ -54,8 +98,8 @@ function init() {
     camera = new THREE.PerspectiveCamera(30000, screenWidth / screenHeight, 1, 10000);
     // camera.position.set(0, 0, 0);
     scene.add(camera);
-    var globalLight = new THREE.AmbientLight( 0x404040 ,2);
-    scene.add( globalLight );
+    var globalLight = new THREE.AmbientLight(0x404040, 2);
+    scene.add(globalLight);
     var light = new THREE.DirectionalLight(0xfff0f0, 0.8);
     light.position.set(-30, 25, 0);
     // var helper = new THREE.DirectionalLightHelper( light, 15 );
@@ -73,54 +117,47 @@ function init() {
         material_array.push(new THREE.MeshBasicMaterial({
             map: TextureLoader.load(skybox_dest + skybox_dirs[i] + skybox_suffix),
             side: THREE.BackSide,
-
+            normalMap: new TextureLoader.load(skybox_dest + skybox_dirs[i] + "_nm" + skybox_suffix)
         }));
     var skyGeometry = new THREE.CubeGeometry(1000, 1000, 1000);
     var skyMaterial = new THREE.MeshFaceMaterial(material_array);
     var skyBox = new THREE.Mesh(skyGeometry, skyMaterial);
     skyBox.rotation.y += Math.PI / 2;
     scene.add(skyBox);
-    // skyBox.frustumCulled=false;
+    var stoneGeometry = new THREE.SphereGeometry(1, 18, 18);
+    var stoneMaterial = new THREE.MeshStandardMaterial({
+        map: stoneTexture,
+        normalMap: stoneNormalMap,
+        displacementMap: stoneDisplacementMap,
+        metalness: 0
+    });
+    stone = new THREE.Mesh(stoneGeometry, stoneMaterial);
+    stone.position.set(-100, 0, 380);
 
-    var stoneGeometry=new THREE.SphereGeometry(1,18,18);
-    var stoneMaterial=new THREE.MeshBasicMaterial({color:0x00ff00});
-    var stoneTexture=new THREE.TextureLoader().load('stone.jpg');
-    var stoneNormalMap=new THREE.TextureLoader().load('NormalMap.png');
-    var stoneDisplacementMap=new THREE.TextureLoader().load('DisplacementMap.png');
-    var stoneMaterial=new THREE.MeshStandardMaterial({map:stoneTexture,normalMap:stoneNormalMap,displacementMap:stoneDisplacementMap,metalness:0});
-    stone=new THREE.Mesh(stoneGeometry,stoneMaterial);
-    stone.position.set(100,0,380);
-
-    var stoneLight=new THREE.SpotLight(0xf0e4f9,300,15,deg2rad(10),1,1);
-    stoneLight.position.set(4,12,-4);
-    var stoneLightHelper=new THREE.SpotLightHelper(stoneLight);
+    var stoneLight = new THREE.SpotLight(0xf0e4f9, 300, 15, deg2rad(10), 1, 1);
+    stoneLight.position.set(4, 12, -4);
+    var stoneLightHelper = new THREE.SpotLightHelper(stoneLight);
     stone.add(stoneLight);
     scene.add(stone);
     // car.
-    var carGeometry=new THREE.BoxGeometry(5,5,5);
-    var carMaterial=new THREE.MeshBasicMaterial({color:0xff0000,wireframe:false,opacity:0.9,transparent:true});
-    car=new THREE.Mesh(carGeometry,carMaterial);
+    var carGeometry = new THREE.BoxGeometry(5, 5, 5);
+    var carMaterial = new THREE.MeshBasicMaterial({color: 0xff0000, wireframe: false, transparent: true});
+    car = new THREE.Mesh(carGeometry, carMaterial);
     // car.position.set(0, 1,200); //15
-    car.position.set(0, 0,400); //15
+    car.position.set(0, 0, 400); //15
     //Camera
     scene.add(car);
-    car.add(camera)
-    document.addEventListener("keydown", onKey,false);
+    car.add(camera);
+    document.addEventListener("keydown", onKey, false);
 
-    //stone
-    // var stoneTexture=new THREE.TextureLoader().load('stone.jpg');
-    // var stoneNormalMap=new THREE.TextureLoader().load('NormalMap.png');
-    // var stoneDisplacementMap=new THREE.TextureLoader().load('DisplacementMap.png');
-
-    // var stoneMaterial=new THREE.MeshStandardMaterial({map:stoneTexture,normalMap:stoneNormalMap,displacementMap:stoneDisplacementMap});
-
+    // var points=document.getElementById('score-container');
+    // points.innerHTML="aaa";
 
 
     function render() {
-        // stone.position.x-=0.1; //TODO: Animacja kulki
-        // stone.rotate(2);
-        // car.position.z-=1;
-        // skyBox.position.z-=0.2;
+        count_score();
+        rotateStone(-100);
+        car.position.z -= 0.1;
         renderer.render(scene, camera);
     }
 
